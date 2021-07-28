@@ -7,9 +7,9 @@ const parser = new Parser();
 const app = express();
 app.use(cors());
 
-const APOLLO_RSS_URL = `https://apollo.lv/rss`;
-const TVNET_RSS_URL = `https://tvnet.lv/rss`;
-const DELFI_RSS_URL = `https://delfi.lv/rss/?channel=delfi`;
+const APOLLO_RSS_URL = `http://apollo.lv/rss`;
+const TVNET_RSS_URL = `http://tvnet.lv/rss`;
+const DELFI_RSS_URL = `http://delfi.lv/rss/?channel=delfi`;
 
 
 async function getNews() {
