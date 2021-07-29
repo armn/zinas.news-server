@@ -10,14 +10,15 @@ app.use(cors());
 const APOLLO_RSS_URL = `https://apollo.lv/rss`;
 const TVNET_RSS_URL = `https://tvnet.lv/rss`;
 const DELFI_RSS_URL = `https://delfi.lv/rss/?channel=delfi`;
-
+const LSM_RSS_URL = `https://lsm.lv/rss/`;
 
 async function getNews() {
     const apollo = await parser.parseURL(APOLLO_RSS_URL);
     const tvnet = await parser.parseURL(TVNET_RSS_URL);
     const delfi = await parser.parseURL(DELFI_RSS_URL);
-
-    return { apollo, tvnet, delfi };
+    const lsm = await parser.parseURL(LSM_RSS_URL);
+    
+    return { apollo, tvnet, delfi, lsm };
 }
 
 app.get("/", async (req, res) => {
@@ -26,5 +27,5 @@ app.get("/", async (req, res) => {
 });
 
 app.listen(8080, () => {
-  console.log("App's running on port 80");
+  console.log("App's running on port 8080");
 });
