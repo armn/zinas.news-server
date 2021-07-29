@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 //const fetch = require("node-fetch");
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const https = require('https');
 const axios = require('axios').default;
 const Parser = require('rss-parser');
 const parser = new Parser({
@@ -12,6 +14,12 @@ const parser = new Parser({
 const app = express();
 app.use(cors());
 
+const instance = axios.create({
+  httpsAgent: new https.Agent({  
+    rejectUnauthorized: false
+  })
+});
+
 const APOLLO_RSS_URL = `https://apollo.lv/rss`;
 const TVNET_RSS_URL = `https://tvnet.lv/rss`;
 const DELFI_RSS_URL = `https://delfi.lv/rss/?channel=delfi`;
@@ -21,10 +29,10 @@ const IR_RSS_URL = `https://ir.lv/feed/`;
 async function getNews() {
     //const apollo = await parser.parseURL(APOLLO_RSS_URL);
 
-    const apollo = await axios.get(APOLLO_RSS_URL);
-    const tvnet = await axios.get(TVNET_RSS_URL);
-    const delfi = await axios.get(DELFI_RSS_URL);
-    const lsm = await axios.get(LSM_RSS_URL);
+    const apollo = await instance.get(APOLLO_RSS_URL);
+    const tvnet = await instance.get(TVNET_RSS_URL);
+    const delfi = await instance.get(DELFI_RSS_URL);
+    const lsm = await instance.get(LSM_RSS_URL);
     // const ir = await parser.parseURL(IR_RSS_URL);
 
     // const apollo_text = await apollo.text();
